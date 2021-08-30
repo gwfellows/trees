@@ -1,5 +1,4 @@
 import random
-import numpy as np
 from score import fitness
 from grow import new_random_code, grow_tree, point_mutate
 
@@ -26,6 +25,7 @@ if __name__ == "__main__":
     from draw import draw
 
     print(*grow_tree(population[0]))
+    print(population[0])
     draw(*grow_tree(population[0]))
     import tkinter
 

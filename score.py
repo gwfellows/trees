@@ -14,18 +14,11 @@ def make_rtree(leaf_positions, branch_positions, r):
     )
 
 
-def shadows(x, y, sx, sy, rtree):
-    # print(rtree.query(LineString([(x, y), (sx, sy)])))
-    return len(rtree.query(LineString([(x, y), (sx, sy)])))
-
-
 def fitness(
     leaf_positions,
     branch_positions,
-    sx=300,
+    sx=0,
     sy=300,
-    sx2=-300,
-    sy2=300,
     r=5,
 ):
     fitness = 0
@@ -41,10 +34,6 @@ def fitness(
         if x < -400 or x > 400 or y > 400 or y < 0:
             fitness -= EXPANDING_PAST_WINDOW_COST
 
-        if shadows(x, y, sx, sy, geom) < 3:
-            fitness += LEAF_MAX_GAIN
-
-        if shadows(x, y, sx2, sy2, geom) < 3:
-            fitness += LEAF_MAX_GAIN
+        fitness += LEAF_MAX_GAIN / (len(geom.query(LineString([(x, y), (sx, sy)]))) - 1)
 
     return fitness

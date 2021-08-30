@@ -5,7 +5,7 @@ turtle.speed(0)
 turtle.delay(0)
 
 
-def draw(leaf_positions, branch_positions, sx=300, sy=300, sx2=-300, sy2=300, r=2):
+def draw(leaf_positions, branch_positions, sx=0, sy=300, r=2):
     for x, y in leaf_positions:
         print(x, y)
         turtle.goto(x, y)
@@ -18,3 +18,7 @@ def draw(leaf_positions, branch_positions, sx=300, sy=300, sx2=-300, sy2=300, r=
         turtle.pendown()
         turtle.goto(x2, y2)
         turtle.penup()
+    turtle.goto(sx,sy)
+    turtle.color("yellow")
+    turtle.pendown()
+    turtle.circle(3)
