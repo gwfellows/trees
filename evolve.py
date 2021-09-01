@@ -27,7 +27,7 @@ if __name__ == "__main__":
                     zip(fitnesses, population), key=lambda p: p[0], reverse=True
                 )
             ]
-            print(n)
+            print("{:.2f}%".format(100 * n / GENERATIONS).zfill(6))
             save = population[:N_SAVE]
             for i in range(N_SAVE, POPULATION_SIZE):
                 population[i] = random.choice(save).copy()
