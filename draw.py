@@ -1,24 +1,13 @@
-import turtle, tkinter
-
-turtle.penup()
-turtle.speed(0)
-turtle.delay(0)
+import webbrowser
+import svgwrite
 
 
 def draw(leaf_positions, branch_positions, sx=0, sy=300, r=2):
+    dwg = svgwrite.Drawing("tree.svg", viewBox="-400 -400 800 400")
     for x, y in leaf_positions:
-        #print(x, y)
-        turtle.goto(x, y)
-        turtle.pendown()
-        turtle.circle(r)
-        turtle.penup()
+        dwg.add(dwg.circle(center=(x, -y), r=r, stroke=svgwrite.rgb(0, 255, 0)))
     for x1, y1, x2, y2 in branch_positions:
-        #print(x1, y1, x2, y2)
-        turtle.goto(x1, y1)
-        turtle.pendown()
-        turtle.goto(x2, y2)
-        turtle.penup()
-    turtle.goto(sx,sy)
-    turtle.color("yellow")
-    turtle.pendown()
-    turtle.circle(3)
+        dwg.add(dwg.line((x1, -y1), (x2, -y2), stroke=svgwrite.rgb(139, 69, 19)))
+    dwg.add(dwg.circle(center=(sx, -sy), r=10, stroke=svgwrite.rgb(255, 255, 0)))
+    dwg.save()
+    webbrowser.open("tree.svg")
