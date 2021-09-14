@@ -3,10 +3,10 @@ from score import fitness
 from grow import new_random_code, grow_tree, point_mutate
 import multiprocessing
 
-POPULATION_SIZE = 50
-GENERATIONS = 100
+POPULATION_SIZE = 800
+GENERATIONS = 2000
 CODE_LENGTH = 200
-N_SAVE = 10
+N_SAVE = 20
 N_MUTATE = 4
 
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
                     zip(fitnesses, population), key=lambda p: p[0], reverse=True
                 )
             ]
-            print("{:.2f}%".format(100 * n / GENERATIONS).zfill(6))
+            print("{:.2f}%".format(100 * (n + 1) / GENERATIONS).zfill(7))
             save = population[:N_SAVE]
             for i in range(N_SAVE, POPULATION_SIZE):
                 population[i] = random.choice(save).copy()
@@ -37,4 +37,4 @@ if __name__ == "__main__":
 
     from draw import draw
 
-    draw(*grow_tree(population[0]))
+    draw(*grow_tree(population[0]), score_code(population[0]))
