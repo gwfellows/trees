@@ -1,26 +1,16 @@
-import numpy as np
+"""
+example 1 : 94
+example 2 : -30 ish
+example 3 : 650
+"""
+
+import time
+from math import cos, sin
+import numpy
 from collections import deque
-from math import sin, cos
-
-MININT8 = np.iinfo(np.int8).min
-MAXINT8 = np.iinfo(np.int8).max
 
 
-def new_random_code(length):
-    return np.random.randint(
-        low=MININT8,
-        high=MAXINT8,
-        size=length,
-        dtype=np.int8,
-    )
-
-
-def point_mutate(code):
-    code[np.random.randint(0, code.shape[0])] = np.random.randint(
-        low=MININT8, high=MAXINT8, dtype=np.int8
-    )
-
-
+@profile
 def safe_pop(stack, default=0):
     try:
         return stack.pop()
@@ -28,6 +18,7 @@ def safe_pop(stack, default=0):
         return default
 
 
+@profile
 def grow_bud(pos, code, n):
     offspring = []
     history = deque()
@@ -78,6 +69,7 @@ def grow_bud(pos, code, n):
     return offspring
 
 
+@profile
 def grow_tree(code, iters=3):
     bud_positions = [(0, 0)]
     branch_positions = []
@@ -89,3 +81,24 @@ def grow_tree(code, iters=3):
                 new_bud_positions.append(new_pos)
         bud_positions = new_bud_positions
     return bud_positions, branch_positions
+
+
+for filename in ["example_tree.npy", "example_tree_2.npy", "example_tree_3.npy"]:
+    with open(filename, "rb") as f:
+        grow_times = []
+        # score_times = []
+        code = numpy.load(f)
+
+        for _ in range(100):
+            t1 = time.time()
+            grow_tree(code)
+            t2 = time.time()
+            grow_times.append(t2 - t1)
+
+            # t1 = time.time()
+            # w = score.fitness(l, b)
+            # t2 = time.time()
+            # score_times.append(t2 - t1)
+
+        print("grow time (" + filename + ") :", sum(grow_times) / len(grow_times))
+        # print("score time: ", sum(score_times) / len(score_times))

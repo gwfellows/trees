@@ -1,2 +1,3 @@
 __pyache__
 *.pyc
+*.lprof

@@ -2,11 +2,18 @@ import random
 from score import fitness
 from grow import new_random_code, grow_tree, point_mutate
 import multiprocessing
+import numpy
 
-POPULATION_SIZE = 800
-GENERATIONS = 2000
+"""
+test various #s of processes
+test out seperate components of tree drawing
+"""
+
+
+POPULATION_SIZE = 30
+GENERATIONS = 100
 CODE_LENGTH = 200
-N_SAVE = 20
+N_SAVE = 8
 N_MUTATE = 4
 
 
@@ -36,5 +43,7 @@ if __name__ == "__main__":
             break
 
     from draw import draw
+
+    numpy.save("example_tree_3", population[0])
 
     draw(*grow_tree(population[0]), score_code(population[0]))
