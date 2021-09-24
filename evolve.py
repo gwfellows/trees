@@ -2,7 +2,7 @@ import random
 from score import fitness
 from grow import new_random_code, grow_tree, point_mutate
 import multiprocessing
-import numpy
+import pickle
 
 """
 test various #s of processes
@@ -11,7 +11,7 @@ test out seperate components of tree drawing
 
 
 POPULATION_SIZE = 30
-GENERATIONS = 100
+GENERATIONS = 1000
 CODE_LENGTH = 200
 N_SAVE = 8
 N_MUTATE = 4
@@ -44,6 +44,6 @@ if __name__ == "__main__":
 
     from draw import draw
 
-    numpy.save("example_tree_3", population[0])
-
+    with open("test_tree.txt", "wb") as f:
+        pickle.dump(population[0], f)
     draw(*grow_tree(population[0]), score_code(population[0]))

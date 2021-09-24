@@ -6,8 +6,8 @@ example 3 : 650
 
 import time
 from math import cos, sin
-import numpy
 from collections import deque
+import pickle
 
 
 @profile
@@ -27,12 +27,9 @@ def grow_bud(pos, code, n):
     x, y = pos
 
     for instruction in code:
-        instruction = int(instruction)
-        if instruction >= 0:  # number
-            stack.append(instruction)
+        if instruction > 12:  # number
+            stack.append(instruction - 13)
         else:
-            instruction %= 12
-            instruction += 1
             if instruction == 1:  # rotCW
                 history.append((x, y, ang))
                 ang += safe_pop(stack)
@@ -83,11 +80,11 @@ def grow_tree(code, iters=3):
     return bud_positions, branch_positions
 
 
-for filename in ["example_tree.npy", "example_tree_2.npy", "example_tree_3.npy"]:
+for filename in ["test_tree.txt"]:
     with open(filename, "rb") as f:
         grow_times = []
         # score_times = []
-        code = numpy.load(f)
+        code = pickle.load(f)
 
         for _ in range(100):
             t1 = time.time()

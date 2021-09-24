@@ -1,23 +1,22 @@
-import numpy as np
+from random import random, randint
 from collections import deque
 from math import sin, cos
 
-MININT8 = np.iinfo(np.int8).min
-MAXINT8 = np.iinfo(np.int8).max
+
+MAXVAL = 200
+MAXINSTR = 12
 
 
 def new_random_code(length):
-    return np.random.randint(
-        low=MININT8,
-        high=MAXINT8,
-        size=length,
-        dtype=np.int8,
-    )
+    return [
+        (randint(0, MAXINSTR)) if random() > 0.5 else (randint(MAXINSTR + 1, MAXVAL))
+        for _ in range(length)
+    ]
 
 
 def point_mutate(code):
-    code[np.random.randint(0, code.shape[0])] = np.random.randint(
-        low=MININT8, high=MAXINT8, dtype=np.int8
+    code[randint(0, len(code) - 1)] = (
+        (randint(0, MAXINSTR)) if random() > 0.5 else (randint(MAXINSTR + 1, MAXVAL))
     )
 
 
@@ -36,12 +35,9 @@ def grow_bud(pos, code, n):
     x, y = pos
 
     for instruction in code:
-        instruction = int(instruction)
-        if instruction >= 0:  # number
-            stack.append(instruction)
+        if instruction > 12:  # number
+            stack.append(instruction - 13)
         else:
-            instruction %= 12
-            instruction += 1
             if instruction == 1:  # rotCW
                 history.append((x, y, ang))
                 ang += safe_pop(stack)
