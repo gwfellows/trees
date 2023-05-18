@@ -10,11 +10,11 @@ test out seperate components of tree drawing
 """
 
 
-POPULATION_SIZE = 30
-GENERATIONS = 1000
+POPULATION_SIZE = 1000
+GENERATIONS = 20000
 CODE_LENGTH = 200
-N_SAVE = 8
-N_MUTATE = 4
+N_SAVE = 30
+N_MUTATE = 9
 
 
 def score_code(code):
@@ -33,7 +33,7 @@ if __name__ == "__main__":
                     zip(fitnesses, population), key=lambda p: p[0], reverse=True
                 )
             ]
-            print("{:.2f}%".format(100 * (n + 1) / GENERATIONS).zfill(7))
+            print("{:.3f}%".format(100 * (n + 1) / GENERATIONS).zfill(8), "{:.3f}".format(sorted(fitnesses)[-1]))
             save = population[:N_SAVE]
             for i in range(N_SAVE, POPULATION_SIZE):
                 population[i] = random.choice(save).copy()
