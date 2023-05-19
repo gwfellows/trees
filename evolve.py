@@ -10,16 +10,15 @@ test out seperate components of tree drawing
 """
 
 
-POPULATION_SIZE = 1000
+POPULATION_SIZE = 400
 GENERATIONS = 20000
-CODE_LENGTH = 200
-N_SAVE = 30
+CODE_LENGTH = 500
+N_SAVE = 20
 N_MUTATE = 9
 
 
 def score_code(code):
     return fitness(*grow_tree(code))
-
 
 if __name__ == "__main__":
     population = [new_random_code(CODE_LENGTH) for _ in range(POPULATION_SIZE)]
