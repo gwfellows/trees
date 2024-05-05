@@ -33,7 +33,10 @@ def fitness(
 
         if x < -400 or x > 400 or y > 400 or y < 0:
             fitness -= EXPANDING_PAST_WINDOW_COST
-
-        fitness += LEAF_MAX_GAIN / (len(geom.query(LineString([(x, y), (sx, sy)]))) - 1)
+        
+        try:
+            fitness += LEAF_MAX_GAIN / (len(geom.query(LineString([(x, y), (sx, sy)]))) - 1)
+        except ZeroDivisionError:
+            print("oops")
 
     return fitness

@@ -10,11 +10,11 @@ test out seperate components of tree drawing
 """
 
 
-POPULATION_SIZE = 400
-GENERATIONS = 20000
-CODE_LENGTH = 500
+POPULATION_SIZE = 100
+GENERATIONS = 200000
+CODE_LENGTH = 100
 N_SAVE = 20
-N_MUTATE = 9
+N_MUTATE = 5
 
 
 def score_code(code):
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     population = [new_random_code(CODE_LENGTH) for _ in range(POPULATION_SIZE)]
     for n in range(GENERATIONS):
         try:
-            p = multiprocessing.Pool(4)
+            p = multiprocessing.Pool(1) #should be 8 :(
             fitnesses = p.map(score_code, population)
             population = [
                 x
